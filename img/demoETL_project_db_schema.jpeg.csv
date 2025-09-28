@@ -1,0 +1,61 @@
+dbms,TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,CONSTRAINT_TYPE,REFERENCED_TABLE_SCHEMA,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME
+mysql,etlv2,albums,userId,1,int,NULL,"FOREIGN KEY",etlv2,users,id
+mysql,etlv2,albums,id,2,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,albums,title,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,albums,created_by,4,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,albums,created_at,5,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,albums,updated_by,6,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,albums,updated_at,7,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,postId,1,int,NULL,"FOREIGN KEY",etlv2,posts,id
+mysql,etlv2,comments,id,2,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,comments,name,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,email,4,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,body,5,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,created_by,6,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,created_at,7,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,updated_by,8,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,comments,updated_at,9,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,albumId,1,int,NULL,"FOREIGN KEY",etlv2,albums,id
+mysql,etlv2,photos,id,2,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,photos,title,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,url,4,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,thumbnailUrl,5,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,created_by,6,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,created_at,7,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,updated_by,8,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,photos,updated_at,9,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,userId,1,int,NULL,"FOREIGN KEY",etlv2,users,id
+mysql,etlv2,posts,id,2,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,posts,title,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,body,4,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,created_by,5,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,created_at,6,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,updated_by,7,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,posts,updated_at,8,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,userId,1,int,NULL,"FOREIGN KEY",etlv2,users,id
+mysql,etlv2,todos,id,2,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,todos,title,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,completed,4,tinyint,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,created_by,5,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,created_at,6,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,updated_by,7,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,todos,updated_at,8,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,users,id,1,int,NULL,"PRIMARY KEY",NULL,NULL,NULL
+mysql,etlv2,users,name,2,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,username,3,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,email,4,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,phone,5,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,website,6,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_street,7,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_suite,8,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_city,9,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_zipcode,10,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_geo_lat,11,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,address_geo_lng,12,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,company_name,13,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,company_catchPhrase,14,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,company_bs,15,varchar,600,NULL,NULL,NULL,NULL
+mysql,etlv2,users,created_by,16,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,users,created_at,17,datetime,NULL,NULL,NULL,NULL,NULL
+mysql,etlv2,users,updated_by,18,varchar,255,NULL,NULL,NULL,NULL
+mysql,etlv2,users,updated_at,19,datetime,NULL,NULL,NULL,NULL,NULL

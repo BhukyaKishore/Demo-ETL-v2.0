@@ -1,0 +1,49 @@
+Todos Table:
+    userId -> it from user(id) [1-10] int not null 
+                if it's null drop that row
+    id -> it also number not null unique null drop that row and log
+    title -> type is string drop (no use of todo without title it may be blanck) 
+    completed -> type boolean it enum(true/false) default false 
+
+Albums Table:
+    userId -> it from user(id) [1-10] int not null 
+                if it's null drop that row
+    id -> it also number not null unique null drop that row and log
+    title -> it's fine for a albume with black make it default untitled (not unique)
+
+Comments Table:
+    userId -> it from user(id) [1-10] int not null 
+                if it's null drop that row
+    id -> it also number not null unique null drop that row and log
+    name -> make it ananomus by default it must be string 
+    email -> check weather it's email or not by reg-rex
+    body -> type string not null drop if it's null it's the main purpose of this table 
+
+Photos table:
+    albumId ->it from albume(id) [1-100] int not null 
+                if it's null drop that row
+    id -> it also number not null unique null drop that row and log
+    title -> by default make it untitled type string
+    url -> type string not null  not unique must check for url of not starts with (http:// ot https://)
+    thumbnailUrl -> type string null  not unique  default one (url) must check for url of not starts with (http:// ot https://)
+
+posts Table:
+    userId -> it from user(id) [1-10] int not null 
+                if it's null drop that row
+    id -> it also number not null unique null drop that row and log
+    title -> type string if it's null slice from body
+    body -> type string if it's null slice from title  //both null write on log file 
+
+
+Users Table:
+    id -> it also number not null unique null drop that row and log
+    name -> string by defaul ananomus
+    username -> string not null unique  or slice name if null 
+    email -> check for email regrex
+    phone-> only numbers 10 digits otherwise null 
+    website -> string must be a site url starts with http:// https:// 
+    address.street,address.suite,address.city, 
+    address.zipcode -> numbers,-> is only allowd and it's a string
+    address.geo.lat,address.geo.lng -> it's a float number
+    company.name -> string
+    company.catchPhrase,company.bs ->strings
