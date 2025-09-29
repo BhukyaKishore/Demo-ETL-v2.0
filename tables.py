@@ -1,3 +1,13 @@
+'''
+Author : Bhavani Kishore
+Date : 26/09/2025
+
+Defines MySQL database tables with appropriate schemas, primary keys, and foreign key constraints.
+Ensures relational integrity and cascading actions between tables.
+Creates tables if they don’t exist to prepare the database for data loading.
+
+'''
+#importing files
 import mysql.connector
 import datetime
 import json
@@ -10,7 +20,7 @@ mydb = None
 mycursor = None
 
 def db_connect():
-    """Ensure the database exists, then connect and provide a global mycursor."""
+    """ Ensure the database exists, then connect and provide a global mycursor."""
     global mydb, mycursor
     # if already connected and healthy, reuse
     if mydb is not None and hasattr(mydb, "is_connected") and mydb.is_connected():
@@ -47,8 +57,13 @@ def db_connect():
         return None
 
 
-
 def users():
+    """
+    Create the 'users' table in the database if it does not exist.
+    Defines user-related fields and timestamps with default metadata.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -78,8 +93,13 @@ def users():
         with open("error.txt", "a") as fs:
             fs.write(f"{datetime.datetime.now()} Error in users: {err}\n")
 
-
 def posts():
+    """
+    Create the 'posts' table with a foreign key referencing 'users'.
+    Includes post-specific fields and timestamps.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -101,6 +121,12 @@ def posts():
 
 
 def comments():
+    """
+    Create the 'comments' table with a foreign key referencing 'posts'.
+    Defines comment-specific fields and timestamps.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -121,8 +147,13 @@ def comments():
         with open("error.txt", "a") as fs:
             fs.write(f"{datetime.datetime.now()} Error in comments: {err}\n")
 
-
 def albums():
+    """
+    Create the 'albums' table with a foreign key referencing 'users'.
+    Includes album-specific fields and timestamps.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -141,8 +172,13 @@ def albums():
         with open("error.txt", "a") as fs:
             fs.write(f"{datetime.datetime.now()} Error in albums: {err}\n")
 
-
 def photos():
+    """
+    Create the 'photos' table with a foreign key referencing 'albums'.
+    Defines photo-specific fields and timestamps.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -165,6 +201,12 @@ def photos():
 
 
 def todos():
+    """
+    Create the 'todos' table with a foreign key referencing 'users'.
+    Defines task-specific fields including completion status and timestamps.
+    Logs any errors encountered during table creation.
+    """
+
     db_connect()
     try:
         mycursor.execute("""
@@ -185,24 +227,45 @@ def todos():
             fs.write(f"{datetime.datetime.now()} Error in todos: {err}\n")
 
 
-#inserting data into tables
-def inserting_data(path,name):
-    db_connect() # Ensure connection is active
+def inserting_data(path :str, name:str):
+    """
+    Read data from a CSV file and insert it into the specified database table.
+    Uses 'ON DUPLICATE KEY UPDATE' to update existing rows based on primary key conflicts.
+    Handles column name cleanup, prepares parameterized queries, and commits transactions.
+    Logs any errors during the data insertion process.
+    
+    """
+
+    db_connect()  # Ensure connection is active
     try:
-        df=pd.read_csv(path)
+        df = pd.read_csv(path)
         if df.empty:
             return
-        columns = [f"`{col.replace('.', '_')}`" for col in df.columns]
-        placeholders = ', '.join(['%s'] * len(columns))
-        # Modified: Use INSERT IGNORE to handle duplicate primary keys
-        insert_sql = f"INSERT IGNORE INTO `{name}` ({', '.join(columns)}) VALUES ({placeholders}) ;"
 
+        # Replace dot in column names with underscore (for SQL)
+        clean_columns = [col.replace('.', '_') for col in df.columns]
+        columns_sql = [f"`{col}`" for col in clean_columns]
+        placeholders = ', '.join(['%s'] * len(columns_sql))
+
+        # Build the ON DUPLICATE KEY UPDATE clause (excluding 'id')
+        update_clause = ', '.join([
+            f"{col}=VALUES({col})"
+            for col in columns_sql
+            if col != '`id`'  # do not try to update the primary key
+        ])
+
+        insert_sql = f"""
+            INSERT INTO `{name}` ({', '.join(columns_sql)})
+            VALUES ({placeholders})
+            ON DUPLICATE KEY UPDATE {update_clause};
+        """
+
+        # Prepare data
         data_to_insert = []
-        for index, row in df.iterrows():
+        for _, row in df.iterrows():
             row_values = []
-            for col in df.columns:
-                val = row[col]
-                if pd.isna(val): # Handle NaN values
+            for val in row:
+                if pd.isna(val):
                     row_values.append(None)
                 elif isinstance(val, bool):
                     row_values.append(val)
@@ -210,6 +273,7 @@ def inserting_data(path,name):
                     row_values.append(val)
             data_to_insert.append(tuple(row_values))
 
+        # Execute batch insert/update
         mycursor.executemany(insert_sql, data_to_insert)
         mydb.commit()
 
@@ -217,10 +281,6 @@ def inserting_data(path,name):
         with open("error.txt", "a") as fs:
             fs.write(f"{datetime.datetime.now()} Error in inserting_data for {name}: {err} \n")
 
-
-users()
-posts()
-comments()
-albums()
-photos()
-todos()
+    except Exception as err:
+        with open("error.txt", "a") as fs:
+            fs.write(f"{datetime.datetime.now()} Error in inserting_data for {name}: {err} \n")
