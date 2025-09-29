@@ -195,7 +195,7 @@ def inserting_data(path,name):
         columns = [f"`{col.replace('.', '_')}`" for col in df.columns]
         placeholders = ', '.join(['%s'] * len(columns))
         # Modified: Use INSERT IGNORE to handle duplicate primary keys
-        insert_sql = f"INSERT IGNORE INTO `{name}` ({', '.join(columns)}) VALUES ({placeholders});"
+        insert_sql = f"INSERT IGNORE INTO `{name}` ({', '.join(columns)}) VALUES ({placeholders}) ;"
 
         data_to_insert = []
         for index, row in df.iterrows():

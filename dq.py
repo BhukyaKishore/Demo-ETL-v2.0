@@ -76,7 +76,7 @@ def bool_check(df, col, table):
     with open('error.txt', 'a') as fs:
         for k in invalid_index:
             fs.write(f'invalid boolean in {table} table at id {df.loc[k,'id']} (value={df.loc[k, col]}) so row is dropped\n')
-    return df
+    return df[is_valid].copy()    
 
 # df=pd.read_csv('temp.csv')
 # bool_check(df,'completed','todo')
@@ -85,7 +85,6 @@ def name_check_to_anonymous(df,col,table):
     #checking for null values
     valid=df[col].notnull()
     invalid_index=df[~valid].index.tolist()
-
     with open('error.txt','a') as fs:
         for k in invalid_index:
             fs.write(f' blank {col} is changed to anonymous in table {table} with id {df.loc[k,'id']} \n')
@@ -100,7 +99,7 @@ def email_check_drop(df,col,table):
     with open ('error.txt','a') as fs:
         for k in invalid_index:
             fs.write(f'invalide email in {table} table in id {df.loc[k,'id']} so droped from table\n')
-        df.drop (k,axis='index')
+        df.drop(k,axis='index')
     return df
 
 def email_check_blank(df,col,table):

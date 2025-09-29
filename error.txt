@@ -64,3 +64,4 @@ invalid boolean in todos table at id 53 (value=34) so row is dropped
 invalid boolean in todos table at id 55 (value=34) so row is dropped
 invalid boolean in todos table at id 57 (value=3) so row is dropped
 invalid boolean in todos table at id 59 (value=3) so row is dropped
+2025-09-29 10:52:28.918214 Error in inserting_data for comments: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`etlv2`.`comments`, CONSTRAINT `comments_fk` FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE) 
